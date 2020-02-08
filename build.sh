@@ -13,6 +13,8 @@ export CROSS_COMPILE=$TOOLCHAIN_DIR/bin/aarch64-linux-android-
 export OPPO_TARGET_DEVICE=MSM_19781
 export TARGET_PRODUCT=msmnile
 
+#make sure submodules are initialized
+git submodule update --init --recursive
 
 #make sure that sh files in AIK dir are executable
 chmod +x $AIK_DIR/*.sh
