@@ -1,0 +1,7 @@
+kernel_source/out
+build
+tools/AIK-Linux/split_img
+tools/AIK-Linux/*.img
+stock_data/boot.img
+build.log
+*.log

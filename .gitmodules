@@ -7,6 +7,3 @@
 [submodule "kernel_source"]
 	path = kernel_source
 	url = https://github.com/mKenfenheuer/realmeX2Pro-kernel-source.git
-[submodule "tools/mkdtboimg"]
-	path = tools/mkdtboimg
-	url = https://android.googlesource.com/platform/system/tools/mkbootimg/
