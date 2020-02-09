@@ -13,6 +13,9 @@ export CROSS_COMPILE=$TOOLCHAIN_DIR/bin/aarch64-linux-android-
 export OPPO_TARGET_DEVICE=MSM_19781
 export TARGET_PRODUCT=msmnile
 
+#make sure submodules are initialized
+git submodule update --init --recursive
+
 #make sure that sh files in AIK dir are executable
 chmod +x $AIK_DIR/*.sh
 
@@ -38,10 +41,10 @@ make defconfig O=out
 make -j$(nproc --all) O=out CC=clang CLANG_TRIPLE=aarch64-linux-gnu-
 
 #unpack stock image
-cd $AIK_DIR 
+cd $AIK_DIR
 ./unpackimg.sh $STOCK_DATA_DIR/boot.img
 
-#replace kernel in unpacked stock image 
+#replace kernel in unpacked stock image
 cp $KERNEL_SOURCE_DIR/out/arch/arm64/boot/Image ./split_img/boot.img-zImage
 
 #repack stock image
@@ -53,7 +56,7 @@ mkdir -p $TARGET_IMAGES_DIR
 #copy new boot img to target dir
 cp image-new.img $TARGET_IMAGES_DIR/boot.img
 
-#make dtbo.img 
+#make dtbo.img
 cd $KERNEL_SOURCE_DIR/out/arch/arm64/boot
 python mkdtboimg.py create dtbo.img dts/*/*.dtbo
 
