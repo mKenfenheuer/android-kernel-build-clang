@@ -1,4 +1,8 @@
 #!/bin/bash
+exec > >(tee -i build.log)
+exec 2>&1
+set -x
+
 export ARCH=arm64
 export SUBARCH=arm64
 export HEADER_ARCH=arm64
@@ -12,8 +16,9 @@ export STOCK_DATA_DIR=$(pwd)/stock_data/
 export FLASH_ZIP_DIR=$(pwd)/tools/flash-zip/
 export MKDTBOIMG_DIR=$(pwd)/tools/mkdtboimg/
 export TARGET_IMAGES_DIR=$(pwd)/build/
-export CLANG_FOLDER=$(pwd)/tools/clang-linux-x86/clang-4691093/
-export PATH=$TOOLCHAIN_DIR/bin/:$CLANG_FOLDER/bin:$MKDTBOIMG_DIR:$AIK_DIR:$PATH
+export CLANG_DIR=$(pwd)/tools/clang-linux-x86/
+export CLANG_VERSION=clang-4691093
+export PATH=$TOOLCHAIN_DIR/bin/:$CLANG_DIR/$CLANG_VERSION/bin:$MKDTBOIMG_DIR:$AIK_DIR:$PATH
 export CROSS_COMPILE=$TOOLCHAIN_DIR/bin/aarch64-linux-android-
 export LD_LIBRARY_PATH=$TOOLCHAIN_DIR/aarch64-linux-gnu/lib64
 export OPPO_TARGET_DEVICE=MSM_19781
@@ -23,9 +28,6 @@ export DEFCONFIG=vendor/sm8150-perf_defconfig
 export DTC_EXT=$DTC_DIR/dtc
 
 clean() {
-
-#make sure submodules are initialized
-git submodule update --init --recursive
 
 #make sure that sh files in AIK dir are executable
 chmod +x $AIK_DIR/*.sh
@@ -42,6 +44,10 @@ gzip -f -c -d boot.img.gz > boot.img
 
 #switch to the right branch of toolchain
 cd $TOOLCHAIN_DIR
+git checkout $ANDROID_RELEASE_BRANCH -f
+
+#switch to the right branch of toolchain
+cd $CLANG_DIR
 git checkout $ANDROID_RELEASE_BRANCH -f
 
 #switch to the right branch of prebuilts
@@ -99,7 +105,7 @@ build_dtbo() {
 
 #make dtbo.img
 cd $KERNEL_SOURCE_DIR/out/arch/arm64/boot
-mkdtboimg.py create dtbo.img dts/*/*.dtb
+mkdtboimg.py create dtbo.img dts/*/*.dtbo
 
 #copy new dtbo img to target dir
 cp dtbo.img $TARGET_IMAGES_DIR/dtbo.img
@@ -127,14 +133,47 @@ for i in "$@" ; do
     fi
 done
 
+#measure time
+start=`date +%s`
+
 #build kernel
-build
+for i in "$@" ; do
+    if [[ $i == "--kernel" ]] ; then
+        echo "Building Kernel."
+	time build
+	break
+    fi
+done
 
 #build boot image
-#build_boot
+for i in "$@" ; do
+    if [[ $i == "--boot_img" ]] ; then
+        echo "Building Boot Image."
+        time build_boot
+        break
+    fi
+done
 
 #build dtbo image
-build_dtbo
+for i in "$@" ; do
+    if [[ $i == "--dtbo" ]] ; then
+        echo "Building DTBO Image."
+        time build_dtbo
+        break
+    fi
+done
+
 
 #build flashable zip
-build_zip
+for i in "$@" ; do
+    if [[ $i == "--zip" ]] ; then
+        echo "Building Flashable Zip File."
+        time build_zip
+        break
+    fi
+done
+
+end=`date +%s`
+runtime=$((end-start))
+
+echo $runtime
