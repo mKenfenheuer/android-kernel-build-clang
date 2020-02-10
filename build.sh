@@ -6,19 +6,20 @@ export TOOLCHAIN_DIR=$(pwd)/tools/toolchain
 export KERNEL_SOURCE_DIR=$(pwd)/kernel_source/
 export AIK_DIR=$(pwd)/tools/AIK-Linux/
 export DTC_DIR=$(pwd)/tools/prebuilts/linux-x86/dtc
-export PREBUILTS_DIR=$(pwd)tools/prebuilts/
-export ANDROID_RELEASE_BRANCH=pie-release
+export PREBUILTS_DIR=$(pwd)/tools/prebuilts/
+export ANDROID_RELEASE_BRANCH=android-9.0.0_r53
 export STOCK_DATA_DIR=$(pwd)/stock_data/
 export FLASH_ZIP_DIR=$(pwd)/tools/flash-zip/
 export MKDTBOIMG_DIR=$(pwd)/tools/mkdtboimg/
 export TARGET_IMAGES_DIR=$(pwd)/build/
-export CLANG_FOLDER=$(pwd)/tools/clang-linux-x86/clang-r365631c/
+export CLANG_FOLDER=$(pwd)/tools/clang-linux-x86/clang-4691093/
 export PATH=$TOOLCHAIN_DIR/bin/:$CLANG_FOLDER/bin:$MKDTBOIMG_DIR:$AIK_DIR:$PATH
 export CROSS_COMPILE=$TOOLCHAIN_DIR/bin/aarch64-linux-android-
 export LD_LIBRARY_PATH=$TOOLCHAIN_DIR/aarch64-linux-gnu/lib64
 export OPPO_TARGET_DEVICE=MSM_19781
 export TARGET_PRODUCT=msmnile
 export DEFCONFIG=vendor/sm8150-perf_defconfig
+#export DEFCONFIG=defconfig
 export DTC_EXT=$DTC_DIR/dtc
 
 clean() {
@@ -44,7 +45,7 @@ cd $TOOLCHAIN_DIR
 git checkout $ANDROID_RELEASE_BRANCH -f
 
 #switch to the right branch of prebuilts
-cd $prebuilts_DIR
+cd $PREBUILTS_DIR
 git checkout $ANDROID_RELEASE_BRANCH -f
 
 cd $KERNEL_SOURCE_DIR

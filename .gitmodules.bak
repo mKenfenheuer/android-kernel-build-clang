@@ -1,0 +1,14 @@
+[submodule "tools/toolchain"]
+	path = tools/toolchain
+	url = https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git
+#	url = https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9
+[submodule "tools/clang-linux-x86"]
+	path = tools/clang-linux-x86
+	url = https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86
+[submodule "kernel_source"]
+	path = kernel_source
+	url = https://github.com/mKenfenheuer/realmeX2Pro-kernel-source.git
+[submodule "tools/prebuilts"]
+	path = tools/prebuilts
+	url = https://github.com/LineageOS/android_prebuilts_misc.git
+#	url = https://android.googlesource.com/platform/prebuilts/misc/
