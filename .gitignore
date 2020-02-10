@@ -5,3 +5,4 @@ tools/AIK-Linux/*.img
 stock_data/boot.img
 build.log
 *.log
+tools/build-tools

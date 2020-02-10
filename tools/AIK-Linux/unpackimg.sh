@@ -71,7 +71,7 @@ if [ ! -f "$img" ]; then
   exit 1;
 fi;
 
-clear;
+#clear;
 echo " ";
 echo "Android Image Kitchen - UnpackImg Script";
 echo "by osm0sis @ xda-developers";
