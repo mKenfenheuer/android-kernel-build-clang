@@ -30,7 +30,7 @@ export DTC_EXT=$DTC_DIR/dtc
 clean() {
 
 #make sure submodules are initialized
-git submodule update --recursive
+git submodule update --init --remote --recursive
 
 #make sure that sh files in AIK dir are executable
 chmod +x $AIK_DIR/*.sh
