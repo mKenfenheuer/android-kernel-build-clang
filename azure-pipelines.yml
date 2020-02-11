@@ -9,7 +9,7 @@ steps:
   submodules: true
   displayName: 'Checkout Sources and Tools'
   persistCredentials: true
-- script: sudo apt-get install gcc-arm-linux-gnueabi build-essential
+- script: sudo apt-get install gcc-arm-linux-gnueabi build-essential unzip zip
   displayName: 'Prepare Build Environment'
 - script: bash build.sh --clean
   displayName: 'Clean WorkDir'
@@ -18,4 +18,7 @@ steps:
 - script: bash build.sh --dtbo
   displayName: 'Build DTBO'
 - script: bash build.sh --zip
-  displayName: 'Build DTBO'
+  displayName: 'Build Zip'
+- publish: $(System.DefaultWorkingDirectory)/build/
+  artifact: KernelBuildOutput
+  displayName: 'Publish Artifacts'
