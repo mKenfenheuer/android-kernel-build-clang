@@ -5,7 +5,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- checkout: self
+  submodules: true
+  displayName: 'Checkout Sources and Tools'
+  persistCredentials: true
 - script: sudo apt-get install gcc-arm-linux-gnueabi build-essential
+  displayName: 'Prepare Build Environment'
 - script: bash build.sh --clean
   displayName: 'Clean WorkDir'
 - script: bash build.sh --kernel
