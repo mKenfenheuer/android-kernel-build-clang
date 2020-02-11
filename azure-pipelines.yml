@@ -1,0 +1,16 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: sudo apt-get install gcc-arm-linux-gnueabi build-essential
+- script: bash build.sh --clean
+  displayName: 'Clean WorkDir'
+- script: bash build.sh --kernel
+  displayName: 'Build Kernel'
+- script: bash build.sh --dtbo
+  displayName: 'Build DTBO'
+- script: bash build.sh --zip
+  displayName: 'Build DTBO'
