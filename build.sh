@@ -29,6 +29,9 @@ export DTC_EXT=$DTC_DIR/dtc
 
 clean() {
 
+#make sure submodules are initialized
+git submodule update --init --remote --recursive
+
 #make sure that sh files in AIK dir are executable
 chmod +x $AIK_DIR/*.sh
 
@@ -53,6 +56,9 @@ git checkout $ANDROID_RELEASE_BRANCH -f
 #switch to the right branch of prebuilts
 cd $PREBUILTS_DIR
 git checkout $ANDROID_RELEASE_BRANCH -f
+
+#make sure build output dir exists 
+mkdir -p $TARGET_IMAGES_DIR
 
 cd $KERNEL_SOURCE_DIR
 
@@ -103,6 +109,9 @@ cp image-new.img $TARGET_IMAGES_DIR/boot.img
 
 build_dtbo() {
 
+#make sure build output dir exists 
+mkdir -p $TARGET_IMAGES_DIR
+
 #make dtbo.img
 cd $KERNEL_SOURCE_DIR/out/arch/arm64/boot
 mkdtboimg.py create dtbo.img dts/*/*.dtbo
@@ -113,6 +122,9 @@ cp dtbo.img $TARGET_IMAGES_DIR/dtbo.img
 }
 
 build_zip() {
+
+#make sure build output dir exists 
+mkdir -p $TARGET_IMAGES_DIR
 
 #copy files to flashing zip
 cp $KERNEL_SOURCE_DIR/out/arch/arm64/boot/Image-dtb $FLASH_ZIP_DIR/Image-dtb
