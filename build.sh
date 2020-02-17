@@ -23,14 +23,14 @@ export CROSS_COMPILE=$TOOLCHAIN_DIR/bin/aarch64-linux-android-
 export LD_LIBRARY_PATH=$TOOLCHAIN_DIR/aarch64-linux-gnu/lib64
 export OPPO_TARGET_DEVICE=MSM_19781
 export TARGET_PRODUCT=msmnile
-export DEFCONFIG=vendor/sm8150-perf_defconfig
+export DEFCONFIG=realme_defconfig
 #export DEFCONFIG=defconfig
 export DTC_EXT=$DTC_DIR/dtc
 
 clean() {
 
 #make sure submodules are initialized
-git submodule update --init --remote --recursive
+#git submodule update --init --remote --recursive
 
 #make sure that sh files in AIK dir are executable
 chmod +x $AIK_DIR/*.sh
