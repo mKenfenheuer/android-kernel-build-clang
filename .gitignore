@@ -6,3 +6,5 @@ stock_data/boot.img
 build.log
 *.log
 tools/build-tools
+tools/flash-zip/Image-dtb
+tools/flash-zip/dtbo.img
