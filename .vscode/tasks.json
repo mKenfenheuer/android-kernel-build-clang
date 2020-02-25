@@ -1,0 +1,37 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build_kernel",
+            "type": "shell",
+            "command": "bash build.sh --kernel",
+            "problemMatcher": []
+        },
+        {
+            "label": "build_dtbo",
+            "type": "shell",
+            "command": "bash build.sh --dtbo",
+            "problemMatcher": [],
+            "dependsOn": "build_kernel"
+        },
+        {
+            "label": "build_zip",
+            "type": "shell",
+            "command": "bash build.sh --zip",
+            "problemMatcher": [],
+            "dependsOn": "build_dtbo",
+            "group": {
+              "kind": "build",
+              "isDefault": true
+            }
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "bash build.sh --clean",
+            "problemMatcher": []
+        }
+    ]
+}

@@ -94,15 +94,6 @@ cp $KERNEL_SOURCE_DIR/out/arch/arm64/boot/Image-dtb ./split_img/boot.img-zImage
 mkdir -p $TARGET_IMAGES_DIR
 
 #copy new boot img to target dir
-cp image-new.img $TARGET_IMAGES_DIR/boot-dtb.img
-
-#replace kernel in unpacked stock image with normal kernel
-cp $KERNEL_SOURCE_DIR/out/arch/arm64/boot/Image ./split_img/boot.img-zImage
-
-#repack stock image
-./repackimg.sh
-
-#copy new boot img to target dir
 cp image-new.img $TARGET_IMAGES_DIR/boot.img
 
 }
@@ -111,6 +102,8 @@ build_dtbo() {
 
 #make sure build output dir exists 
 mkdir -p $TARGET_IMAGES_DIR
+
+rm $TARGET_IMAGES_DIR/dtbo.img
 
 #make dtbo.img
 cd $KERNEL_SOURCE_DIR/out/arch/arm64/boot
@@ -123,8 +116,11 @@ cp dtbo.img $TARGET_IMAGES_DIR/dtbo.img
 
 build_zip() {
 
+
 #make sure build output dir exists 
 mkdir -p $TARGET_IMAGES_DIR
+
+rm $TARGET_IMAGES_DIR/*.zip
 
 #copy files to flashing zip
 cp $KERNEL_SOURCE_DIR/out/arch/arm64/boot/Image-dtb $FLASH_ZIP_DIR/Image-dtb
