@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=Hyper kernel for RMX1931
+kernel.string=Android Kernel
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
